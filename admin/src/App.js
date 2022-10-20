@@ -11,6 +11,7 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/AuthContext";
 import Single from "./components/single/Single";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
