@@ -7,25 +7,40 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
+import { useEffect } from "react";
+import useFetch from "../../hooks/useFetch";
 
 
-const Single = () => {
+const Single =  () => {
   const { user } = useContext(AuthContext);
+  const id = user._id
+  const {data, loading, error, reFetch} = useFetch(`/users/${id}`)
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState("");
   const [show, setShow] = useState(false);
 
-const update = async ()=>{
+function handleUserNameChange(e) {
+  setUsername(e.target.value)
+}
+
+function handleEmail(e) {
+  setEmail(e.target.value)
+}
+
+function handleAgeChange(e) {
+  setAge(e.target.value)
+}
+
+ const update = async ()=>{
   try {
     const id= user._id
-    const updatedUser = {
-      username:username,
-      email:email,
-      age:age
-    }
-    await axios.put(`/users/${id}`, updatedUser);
-    console.log(id, updatedUser)
+    const data = {};
+    if(username) data.username = username;
+    if(email) data.email = email;
+     if(age) data.age = age
+    await axios.put(`/users/${id}`,data);
   } catch (error) {
     console.log(error)
   }
@@ -52,15 +67,15 @@ const update = async ()=>{
                   className="itemImg"
                 />
                 <div className="details">
-                  <h1 className="itemTitle">{user.username}</h1>
+                  <h1 className="itemTitle">{data.username}</h1>
                   <div className="detailItem">
                     <span className="itemKey">Email:</span>
-                    <span className="itemValue">{user.email}</span>
+                    <span className="itemValue">{data.email}</span>
                   </div>
                   <div className="detailItem">
                     <span className="itemKey">age:</span>
                     <span className="itemValue">
-                      {user.age}
+                      {data.age}
                     </span>
                   </div>
                   <div className="detailItem">
@@ -86,7 +101,7 @@ const update = async ()=>{
                 placeholder="Username *"
                 name="username"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={handleUserNameChange}
                 required
               />
             </Form.Group>
@@ -97,7 +112,7 @@ const update = async ()=>{
                 placeholder="Email *"
                 name="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmail}
                 required
               />
             </Form.Group>
@@ -108,7 +123,7 @@ const update = async ()=>{
                 placeholder="Age *"
                 name="age"
                 value={age}
-                onChange={(e) => setAge(e.target.value)}
+                onChange={handleAgeChange}
                 min="18" max="100"
                 required
               />
