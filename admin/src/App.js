@@ -12,6 +12,7 @@ import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/AuthContext";
 import Single from "./components/single/Single";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Restaurants from "./components/restaurants/Restaurants";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -43,6 +44,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Single />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/restaurants"
+            element={
+              <ProtectedRoute>
+                <Restaurants />
               </ProtectedRoute>
             }
           />
