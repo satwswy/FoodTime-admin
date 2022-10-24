@@ -1,4 +1,4 @@
-import "./restaurants.scss";
+import "./tables.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -9,14 +9,26 @@ import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 import { useEffect } from "react";
 import useFetch from "../../hooks/useFetch";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 
-const Restaurants = () => {
-
+const Tables = () => {
+    //  name: { type: String, required: true },
+    //   type: { type: String, required: true },
+    //   city: { type: String, required: true },
+    //   address: { type: String, required: true },
+    //   distance: { type: String, required: true },
+    //   photos: { type: [String] },
+    //   title: { type: String, required: true },
+    //   desc: { type: String, required: true },
+    //   rating: { type: Number, min: 0, max: 5 },
+    //   tables: { type: [String] },
+    //   featured: { type: Boolean, default: false },
+    const location = useLocation();
+    const [restaurant, setRestaurant] = useState(location.state.restaurantId);
     const { user } = useContext(AuthContext);
     const id = user._id
-    const { data, loading, error, reFetch } = useFetch(`/users/rest/${id}`)
+    const { data, loading, error, reFetch } = useFetch(`restaurants/table/${restaurant}`)
     const [name, setName] = useState("");
     const [type, setType] = useState("");
     const [address, setAddress] = useState("");
@@ -25,40 +37,11 @@ const Restaurants = () => {
     const [show, setShow] = useState(false);
     const [tables, setTables] = useState([]);
 
-    console.log(tables)
 
-    function handleNameChange(e) {
-        setName(e.target.value)
-    }
-
-    function handleType(e) {
-        setType(e.target.value)
-    }
-
-    function handleAddress(e) {
-        setAddress(e.target.value)
-    }
-    function handleDesc(e) {
-        setDesc(e.target.value)
-    }
-
-    const update = async () => {
-        try {
-            const id = newid
-            const data = {};
-            if (name) data.name = name;
-            if (type) data.type = type;
-            if (address) data.address = address
-            if (desc) data.desc = desc
-            await axios.put(`/restaurants/${id}`, data);
-        } catch (error) {
-            console.log(error)
-        }
-        handleClose()
-    }
+    console.log(data)
+    console.log(restaurant)
 
 
-    const navigate = useNavigate();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -68,16 +51,13 @@ const Restaurants = () => {
             <div className="restaurants">
                 <Sidebar />
                 <div className="restaurantsContainer">
-                    {data.map((restaurant) => <>
+                    {data.map((table) => <>
                         <div className="top">
                             <div className="left">
                                 <div className="editButton" onClick={event => {
                                     handleShow();
-                                    setNewid(restaurant._id);
+                                    setNewid(table._id);
                                 }}>Edit</div>
-                                <div className="tablesButton" onClick={()=>{
-                                    navigate("/tables", {state: {restaurantId: restaurant._id}})
-                                }}  > Tables </div>
                                 <h1 className="title">Information</h1>
                                 <div className="item">
                                     <img
@@ -86,39 +66,34 @@ const Restaurants = () => {
                                         className="itemImg"
                                     />
                                     <div className="details">
-                                        <h1 className="itemTitle">{restaurant.name}</h1>
+                                        <h1 className="itemTitle">{table.title}</h1>
                                         <div className="detailItem">
-                                            <span className="itemKey">Type:</span>
-                                            <span className="itemValue">{restaurant.type}</span>
-                                        </div>
-                                        <div className="detailItem">
-                                            <span className="itemKey">City:</span>
-                                            <span className="itemValue">
-                                                {restaurant.city}
-                                            </span>
-                                        </div>
-                                        <div className="detailItem">
-                                            <span className="itemKey">Address:</span>
-                                            <span className="itemValue">
-                                                {restaurant.address}
-                                            </span>
+                                            <span className="itemKey">Max People:</span>
+                                            <span className="itemValue">{table.maxPeople}</span>
                                         </div>
                                         <div className="detailItem">
                                             <span className="itemKey">Description:</span>
                                             <span className="itemValue">
-                                                {restaurant.desc}
+                                                {table.desc}
                                             </span>
                                         </div>
+
                                         <div className="detailItem">
-                                            <span className="itemKey">Role:</span>
-                                            <span className="itemValue">Restaurant Owner</span>
+                                            <span className="itemKey">Table Numbers:</span>
+                                            <span className="itemValue">
+                                                <div className="tn-div">
+                                                {table.tableNumbers.map(current => 
+                                                    <div >{current.number} ,</div> 
+                                                )}
+                                                </div>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <Modal show={show} onHide={handleClose}>
+                        {/* <Modal show={show} onHide={handleClose}>
                             <Modal.Header closeButton>
                                 <Modal.Title>Modal heading</Modal.Title>
                             </Modal.Header>
@@ -179,7 +154,7 @@ const Restaurants = () => {
                                     Save Changes
                                 </Button>
                             </Modal.Footer>
-                        </Modal>
+                        </Modal> */}
                     </>
                     )}
                 </div>
@@ -194,4 +169,4 @@ const Restaurants = () => {
     );
 };
 
-export default Restaurants;
+export default Tables;
