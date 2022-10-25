@@ -38,6 +38,17 @@
             cursor: pointer;
             border-radius: 0px 0px 0px 5px;
           }
+          .reservationsButton{
+            position: absolute;
+            top: 0;
+            right: 120px;
+            padding: 5px;
+            font-size: 12px;
+            color: #7451f8;
+            background-color: #7551f818;
+            cursor: pointer;
+            border-radius: 0px 0px 0px 5px;
+          }
   
           .item {
             display: flex;

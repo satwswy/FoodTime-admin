@@ -51,8 +51,8 @@ const Tables = () => {
             <div className="restaurants">
                 <Sidebar />
                 <div className="restaurantsContainer">
-                    {data.map((table) => <>
-                        <div className="top">
+                    {data.map((table, index) => <>
+                        <div className="top" key={index}>
                             <div className="left">
                                 <div className="editButton" onClick={event => {
                                     handleShow();

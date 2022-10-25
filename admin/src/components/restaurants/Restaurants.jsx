@@ -68,8 +68,8 @@ const Restaurants = () => {
             <div className="restaurants">
                 <Sidebar />
                 <div className="restaurantsContainer">
-                    {data.map((restaurant) => <>
-                        <div className="top">
+                    {data.map((restaurant, index) => <>
+                        <div className="top" key={index}>
                             <div className="left">
                                 <div className="editButton" onClick={event => {
                                     handleShow();
@@ -78,6 +78,9 @@ const Restaurants = () => {
                                 <div className="tablesButton" onClick={()=>{
                                     navigate("/tables", {state: {restaurantId: restaurant._id}})
                                 }}  > Tables </div>
+                                <div className="reservationsButton" onClick={()=>{
+                                    navigate("/reservations", {state: {restaurantId: restaurant._id}})
+                                }}  > Reservations </div>
                                 <h1 className="title">Information</h1>
                                 <div className="item">
                                     <img
