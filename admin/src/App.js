@@ -13,6 +13,7 @@ import { AuthContext } from "./context/AuthContext";
 import Single from "./components/single/Single";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Restaurants from "./components/restaurants/Restaurants";
+import Reservations from "./components/reservations/Reservations";
 import Tables from "./components/tables/Tables";
 
 function App() {
@@ -61,6 +62,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Tables />
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path="/reservations"
+            element={
+              <ProtectedRoute>
+                <Reservations />
               </ProtectedRoute>
             }
           />
