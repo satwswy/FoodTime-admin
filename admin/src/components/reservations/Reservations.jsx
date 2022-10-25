@@ -39,10 +39,8 @@ const Reservations = () => {
                             newDate.pop()
                             newDate.pop()
                             let searchedDateString = newDate.join(' ')
-                            console.log(searchedDateString)
                             return <div className="reserve-dates">
-                                {searchedDateString}
-                                
+                                {searchedDateString}    
                             </div>
                         })}  </td>
                     </tr>
