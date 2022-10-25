@@ -45,12 +45,6 @@ const Sidebar = () => {
               <span>Restaurants</span>
             </li>
           </Link>
-          <Link to="/tables" style={{ textDecoration: "none" }}>
-            <li>
-              <CreditCardIcon className="icon" />
-              <span>Tables</span>
-            </li>
-          </Link>
           <li>
             <LocalShippingIcon className="icon" />
             <span>Delivery</span>
