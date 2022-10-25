@@ -18,7 +18,7 @@ const Reservations = () => {
     const [restaurant, setRestaurant] = useState(location.state.restaurantId);
     const { data, loading, error, reFetch } = useFetch(`/restaurants/reservations/${restaurant}`)
 
-    console.log(data)
+
     return (
         <div>
             <table>
